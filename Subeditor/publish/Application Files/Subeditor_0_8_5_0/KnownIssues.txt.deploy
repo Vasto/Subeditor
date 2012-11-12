@@ -1,2 +1,0 @@
-﻿1. Istnieje możliwość otwarcia pliku o zawartości niezgodnej z wybranym typem w oknie wyboru pliku, a o takim samym rozszerzeniu.
-2. Dokonanie nic nie zmieniającej modyfikacji timingu jest uznawane jako zmiana, przez co uaktywaniają się funkcje cofnij/wróć.
