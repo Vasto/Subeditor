@@ -1,0 +1,376 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{97019C5E-6065-46EB-BCF3-8AC773C33216}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Subeditor</RootNamespace>
+    <AssemblyName>Subeditor</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>0.8.5.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>D3568B8BC6D54B346684A8C7E2FBA0C846071C44</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Subeditor_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Assets\AppIcon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DiffMatchPatch, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\DiffMatchPatch.dll</HintPath>
+    </Reference>
+    <Reference Include="KWinFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\KWinFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics, Version=2.2.1.24, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="ScintillaNET, Version=2.5.0.0, Culture=neutral, PublicKeyToken=948d6c9751444115, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\ScintillaNET.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\ClipboardAssistant.cs" />
+    <Compile Include="Model\FileFormats\AssFileFormat.cs" />
+    <Compile Include="Model\FileFormats\SSAFileFormat.cs" />
+    <Compile Include="Model\FileFormats\SubripFileFormat.cs" />
+    <Compile Include="Model\FileFormats\MicroDVDFileFormat.cs" />
+    <Compile Include="Model\FileFormats\TMPlayerFileFormat.cs" />
+    <Compile Include="Model\FileFormats\UnresolvedFileFormat.cs" />
+    <Compile Include="Model\Modifications\SubtitlesContentModificationArea.cs" />
+    <Compile Include="Model\OrganizationalEntities\AssEventEntry.cs" />
+    <Compile Include="Model\OrganizationalEntities\Entry.cs" />
+    <Compile Include="Model\Modifications\CompositeModification.cs" />
+    <Compile Include="Model\Modifications\IGroupableModification.cs" />
+    <Compile Include="Model\Modifications\IModification.cs" />
+    <Compile Include="Model\Modifications\IModificationSource.cs" />
+    <Compile Include="Model\Modifications\ModificationComposer.cs" />
+    <Compile Include="Model\Modifications\ModificationGroup.cs" />
+    <Compile Include="Model\Modifications\SubtitlesContentModification.cs" />
+    <Compile Include="Model\Modifications\SubtitlesEditStateModification.cs" />
+    <Compile Include="Model\OrganizationalEntities\Line.cs" />
+    <Compile Include="Model\OrganizationalEntities\MicroDVDEntry.cs" />
+    <Compile Include="Model\OrganizationalEntities\SSAEventEntry.cs" />
+    <Compile Include="Model\OrganizationalEntities\SubripEntry.cs" />
+    <Compile Include="Model\OrganizationalEntities\TimedEntry.cs" />
+    <Compile Include="Model\OrganizationalEntities\TMPlayerEntry.cs" />
+    <Compile Include="Model\StateManagement\IUndoRedoManager.cs" />
+    <Compile Include="Model\SubtitlesChangedEventArgs.cs" />
+    <Compile Include="Model\SubtitlesContentChangedEventArgs.cs" />
+    <Compile Include="Model\SubtitlesEditState.cs" />
+    <Compile Include="Model\StateManagement\IUndoableRedoable.cs" />
+    <Compile Include="Model\IClipboard.cs" />
+    <Compile Include="Model\SubtitlesClipboard.cs" />
+    <Compile Include="Model\StateManagement\UndoRedoManager.cs" />
+    <Compile Include="Model\SubtitlesEditStateChangedEventArgs.cs" />
+    <Compile Include="Model\Tools\EditToolBase.cs" />
+    <Compile Include="Model\Tools\Strategies\AssEditStrategy.cs" />
+    <Compile Include="Model\Tools\Strategies\EditStrategyBase.cs" />
+    <Compile Include="Model\Tools\Strategies\StrategyForFormatRepository.cs" />
+    <Compile Include="Model\Tools\Strategies\EmptyEditStrategy.cs" />
+    <Compile Include="Model\Tools\Strategies\IEditStrategy.cs" />
+    <Compile Include="Model\FileFormats\SubtitlesFormatResolver.cs" />
+    <Compile Include="Model\Tools\Strategies\MicroDVDEditStrategy.cs" />
+    <Compile Include="Model\Tools\Strategies\SSAEditStrategy.cs" />
+    <Compile Include="Model\Tools\Strategies\SubripEditStrategy.cs" />
+    <Compile Include="Model\Tools\SynchronizationPointsValidator.cs" />
+    <Compile Include="Model\Tools\Strategies\TMPlayerEditStrategy.cs" />
+    <Compile Include="Model\Tools\SynchronizationPoint.cs" />
+    <Compile Include="Model\Tools\SynchronizationTool.cs" />
+    <Compile Include="Model\Tools\TimingAdjustmentTool.cs" />
+    <Compile Include="Utilities\IEnumerableExtensions.cs" />
+    <Compile Include="Utilities\RollingStack.cs" />
+    <Compile Include="Utilities\TextRange.cs" />
+    <Compile Include="Utilities\TextUtilities.cs" />
+    <Compile Include="EventArgs.cs" />
+    <Compile Include="Model\ApplicationManager.cs" />
+    <Compile Include="Model\Selection.cs" />
+    <Compile Include="Model\SubtitlesEditor.cs" />
+    <Compile Include="Model\SubtitlesFile.cs" />
+    <Compile Include="Model\FileFormats\SubtitlesFileFormat.cs" />
+    <Compile Include="Model\SubtitlesManager.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\FileFilterBuilder.cs" />
+    <Compile Include="Views\Commands\SelectFromCommandPresenter.cs" />
+    <Compile Include="Views\Commands\SynchronizationCommandPresenter.cs" />
+    <Compile Include="Views\Commands\TimingAdjustmentCommandPresenter.cs" />
+    <Compile Include="Views\Commands\CopyCommandPresenter.cs" />
+    <Compile Include="Views\Commands\CutCommandPresenter.cs" />
+    <Compile Include="Views\Commands\ExitCommandPresenter.cs" />
+    <Compile Include="Views\Commands\PasteCommandPresenter.cs" />
+    <Compile Include="Views\Commands\RedoCommandPresenter.cs" />
+    <Compile Include="Views\Commands\SaveFileCommandPresenter.cs" />
+    <Compile Include="Views\Commands\OpenFileCommandPresenter.cs" />
+    <Compile Include="Views\Commands\SaveAsFileCommandPresenter.cs" />
+    <Compile Include="Views\Commands\SelectAllCommandPresenter.cs" />
+    <Compile Include="Views\Commands\UndoCommandPresenter.cs" />
+    <Compile Include="Views\ContextMenu\IMainContextMenuStripView.cs" />
+    <Compile Include="Views\ContextMenu\MainContextMenuStripPresenter.cs" />
+    <Compile Include="Views\ContextMenu\MainContextMenuStripView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Views\Dialogs\InfoBox\IInfoBoxView.cs" />
+    <Compile Include="Views\Dialogs\InfoBox\InfoBoxPresenter.cs" />
+    <Compile Include="Views\Dialogs\InfoBox\InfoBoxView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Dialogs\InfoBox\InfoBoxView.Designer.cs">
+      <DependentUpon>InfoBoxView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\SaveBeforeClose\ISaveBeforeCloseView.cs" />
+    <Compile Include="Views\Dialogs\SaveBeforeClose\SaveBeforeClosePresenter.cs" />
+    <Compile Include="Views\Dialogs\SaveBeforeClose\SaveBeforeCloseView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Dialogs\SaveBeforeClose\SaveBeforeCloseView.Designer.cs">
+      <DependentUpon>SaveBeforeCloseView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\SaveFile\SaveFilePresenter.cs" />
+    <Compile Include="Views\Dialogs\SaveFile\SaveFileView.cs" />
+    <Compile Include="Views\FormatDisplayResolver.cs" />
+    <Compile Include="Views\FramesBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\FramesBox.Designer.cs">
+      <DependentUpon>FramesBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\IMainFormView.cs" />
+    <Compile Include="Views\Main\MainFormPresenter.cs" />
+    <Compile Include="Views\Main\MainFormView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Main\MainFormView.Designer.cs">
+      <DependentUpon>MainFormView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\OpenFile\IOpenFileView.cs" />
+    <Compile Include="Views\Dialogs\OpenFile\OpenFilePresenter.cs" />
+    <Compile Include="Views\Dialogs\OpenFile\OpenFileView.cs" />
+    <Compile Include="Views\Dialogs\SaveFile\ISaveFileView.cs" />
+    <Compile Include="Views\Menus\Encodings\EncodingComboBoxPresenter.cs" />
+    <Compile Include="Views\Menus\Encodings\EncodingDisplayNameMap.cs" />
+    <Compile Include="Views\Subtitles\ISubtitlesView.cs" />
+    <Compile Include="Views\Subtitles\ScintillaSubtitlesView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Subtitles\ScintillaSubtitlesView.Designer.cs">
+      <DependentUpon>ScintillaSubtitlesView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Subtitles\ScrolledEventArgs.cs" />
+    <Compile Include="Views\Subtitles\SelectionChangedEventArgs.cs" />
+    <Compile Include="Views\Subtitles\SubtitlesPresenter.cs" />
+    <Compile Include="Views\TimeBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\TimeBox.Designer.cs">
+      <DependentUpon>TimeBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tools\Synchronization\ISynchronizationToolView.cs" />
+    <Compile Include="Views\Tools\Synchronization\SynchronizationToolPresenter.cs" />
+    <Compile Include="Views\Tools\Synchronization\SynchronizationToolView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Tools\Synchronization\SynchronizationToolView.Designer.cs">
+      <DependentUpon>SynchronizationToolView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tools\TimingAdjusts\ITimingAdjustmentToolView.cs" />
+    <Compile Include="Views\Tools\TimingAdjusts\TimingAdjustmentToolPresenter.cs" />
+    <Compile Include="Views\Tools\TimingAdjusts\TimingAdjustmentToolView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Tools\TimingAdjusts\TimingAdjustmentToolView.Designer.cs">
+      <DependentUpon>TimingAdjustmentToolView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewCloseCancellationToken.cs" />
+    <Compile Include="Views\ViewPreCloseEventArgs.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Views\ContextMenu\MainContextMenuStripView.resx">
+      <DependentUpon>MainContextMenuStripView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Dialogs\InfoBox\InfoBoxView.resx">
+      <DependentUpon>InfoBoxView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Dialogs\SaveBeforeClose\SaveBeforeCloseView.resx">
+      <DependentUpon>SaveBeforeCloseView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FramesBox.resx">
+      <DependentUpon>FramesBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Main\MainFormView.resx">
+      <DependentUpon>MainFormView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Subtitles\ScintillaSubtitlesView.resx">
+      <DependentUpon>ScintillaSubtitlesView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\TimeBox.resx">
+      <DependentUpon>TimeBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Tools\Synchronization\SynchronizationToolView.resx">
+      <DependentUpon>SynchronizationToolView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Tools\TimingAdjusts\TimingAdjustmentToolView.resx">
+      <DependentUpon>TimingAdjustmentToolView.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="Subeditor_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\alert.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\AppIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\CopyIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\CutIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\error.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\OpenIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\PasteIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RedoIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\SaveAsFileIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\SavFileIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UndoIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="KnownIssues.txt" />
+    <Content Include="SciLexer.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SciLexer64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
