@@ -11,8 +11,27 @@ namespace Subeditor.Model.OrganizationalEntities
     /// </summary>
     class TMPlayerEntry: TimedEntry
     {
-        private readonly String timeFormat;
-        private readonly String timeEntryPattern;
+        private static readonly String timeFormat = CreateTimeFormat();
+        private static readonly String timeEntryPattern = CreateTimeEntryPattern();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private static String CreateTimeFormat()
+        {
+            return "hh\\:mm\\:ss";
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private static String CreateTimeEntryPattern()
+        {
+            return @"(?<start>\d{2}:\d{2}:\d{2})(?::|\s)(?<text>.*(?:\r\n?|\r?|\n?))"; //lepsza wydajność
+            //return @"(?<start>\d{2}:\d{2}:\d{2}):(?<text>.*(\r\n|\r|\n)?)";
+        }
 
         private String text;
 
@@ -24,9 +43,6 @@ namespace Subeditor.Model.OrganizationalEntities
         public TMPlayerEntry(String content, int start)
             : base(content, start)
         {
-            this.timeFormat = CreateTimeFormat();
-            this.timeEntryPattern = CreateTimeEntryPattern();
-
             this.ParseContent();
         }
 
@@ -40,9 +56,6 @@ namespace Subeditor.Model.OrganizationalEntities
         public TMPlayerEntry(String content, int start, long timingStart, long timingEnd) 
             : base(content, start, timingStart, timingEnd)
         {
-            this.timeFormat = CreateTimeFormat();
-            this.timeEntryPattern = CreateTimeEntryPattern();
-
             this.ParseContent();
         }
 
@@ -56,9 +69,6 @@ namespace Subeditor.Model.OrganizationalEntities
         public TMPlayerEntry(String content, int start, TimeSpan timingStart, TimeSpan timingEnd)
             : base(content, start, timingStart, timingEnd)
         {
-            this.timeFormat = CreateTimeFormat();
-            this.timeEntryPattern = CreateTimeEntryPattern();
-
             this.ParseContent();
         }
 
@@ -166,6 +176,7 @@ namespace Subeditor.Model.OrganizationalEntities
         /// </summary>
         private void ParseContent()
         {
+            //Regex entryRegex = new Regex(timeEntryPattern);
             Match entryMatch = Regex.Match(Content, timeEntryPattern);
             if (entryMatch.Success)
             {
@@ -175,16 +186,6 @@ namespace Subeditor.Model.OrganizationalEntities
                 String textValue = entryMatch.Groups["text"].Value;
                 Text = textValue;
             }
-        }
-
-        private String CreateTimeFormat()
-        {
-            return "hh\\:mm\\:ss";
-        }
-
-        private String CreateTimeEntryPattern()
-        {
-            return @"(?<start>\d{2}:\d{2}:\d{2}):(?<text>.*(\r\n|\r|\n)?)";
         }
 
     }

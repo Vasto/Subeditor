@@ -12,8 +12,27 @@ namespace Subeditor.Model.OrganizationalEntities
     /// </summary>
     class SubripEntry : TimedEntry
     {
-        private readonly String timeFormat;
-        private readonly String timingPattern;
+        private static readonly String timeFormat = CreateTimeFormat();
+        private static readonly String timingPattern = CreateTimingPattern();
+        private static readonly Regex timingRegex = new Regex(timingPattern, RegexOptions.Compiled);
+
+        /// <summary>
+        /// Tworzy tekst będący formatem czasu używanego przez wpis.
+        /// </summary>
+        /// <returns></returns>
+        private static String CreateTimeFormat()
+        {
+            return "hh\\:mm\\:ss\\,fff";
+        }
+
+        /// <summary>
+        /// Tworzy wzór zdarzenia dla wyrażenia regularengo, mającego dopasować czas bieżącego wpsiu.
+        /// </summary>
+        /// <returns></returns>
+        private static String CreateTimingPattern()
+        {
+            return @"(?<start>\d{2}:\d{2}:\d{2},\d{3})\s-->\s(?<end>\d{2}:\d{2}:\d{2},\d{3})";
+        }
 
         private int number;
         private String text;
@@ -26,9 +45,6 @@ namespace Subeditor.Model.OrganizationalEntities
         public SubripEntry(String content, int start)
             : base(content, start)
         {
-            this.timeFormat = CreateTimeFormat();
-            this.timingPattern = CreateTimingPattern();
-
             this.ParseContent();
         }
 
@@ -42,9 +58,6 @@ namespace Subeditor.Model.OrganizationalEntities
         public SubripEntry(String content, int start, long timingStart, long timingEnd) 
             : base(content, start, timingStart, timingEnd)
         {
-            this.timeFormat = CreateTimeFormat();
-            this.timingPattern = CreateTimingPattern();
-
             this.ParseContent();
         }
 
@@ -58,9 +71,6 @@ namespace Subeditor.Model.OrganizationalEntities
         public SubripEntry(String content, int start, TimeSpan timingStart, TimeSpan timingEnd)
             : base(content, start, timingStart, timingEnd)
         {
-            this.timeFormat = CreateTimeFormat();
-            this.timingPattern = CreateTimingPattern();
-
             this.ParseContent();
         }
 
@@ -220,7 +230,8 @@ namespace Subeditor.Model.OrganizationalEntities
                     throw new Exception("Missing entry part.");
                 }
 
-                Match timingMatch = Regex.Match(secondLine, timingPattern);
+                //Regex timingRegex = new Regex(timingPattern);
+                Match timingMatch = timingRegex.Match(secondLine);
                 if (timingMatch.Success)
                 {
                     String timingStartValue = timingMatch.Groups["start"].Value;
@@ -241,22 +252,6 @@ namespace Subeditor.Model.OrganizationalEntities
             }
         }
 
-        /// <summary>
-        /// Tworzy tekst będący formatem czasu używanego przez wpis.
-        /// </summary>
-        /// <returns></returns>
-        private String CreateTimeFormat()
-        {
-            return "hh\\:mm\\:ss\\,fff";
-        }
 
-        /// <summary>
-        /// Tworzy wzór zdarzenia dla wyrażenia regularengo, mającego dopasować czas bieżącego wpsiu.
-        /// </summary>
-        /// <returns></returns>
-        private String CreateTimingPattern()
-        {
-            return @"(?<start>\d{2}:\d{2}:\d{2},\d{3})\s-->\s(?<end>\d{2}:\d{2}:\d{2},\d{3})";
-        }
     }
 }

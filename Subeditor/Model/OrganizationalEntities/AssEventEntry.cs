@@ -14,6 +14,30 @@ namespace Subeditor.Model.OrganizationalEntities
         private static readonly String timeFormat = "h\\:mm\\:ss\\.ff";
         private static readonly String marginFormat = "0000";
         private static readonly String eventPattern = CreateEventPattern();
+        private static readonly Regex eventRegex = new Regex(eventPattern, RegexOptions.Compiled);
+
+        /// <summary>
+        /// Tworzy wzór zdarzenia dla wyrażenia regularengo, mającego dopasować bieżący wpis.
+        /// </summary>
+        /// <returns></returns>
+        private static String CreateEventPattern()
+        {
+            StringBuilder patternBuilder = new StringBuilder();
+
+            patternBuilder.Append(@"(?<format>(?:Dialogue|Comment|Picture|Sound|Movie|Command)):\s");
+            patternBuilder.Append(@"(?<layer>\d+),");
+            patternBuilder.Append(@"(?<start>\d{1,2}:\d{2}:\d{2}\.\d{2}),");
+            patternBuilder.Append(@"(?<end>\d{1,2}:\d{2}:\d{2}\.\d{2}),");
+            patternBuilder.Append(@"(?<style>.*?),");
+            patternBuilder.Append(@"(?<name>.*?),");
+            patternBuilder.Append(@"(?<marginL>\d{1,4}),");
+            patternBuilder.Append(@"(?<marginR>\d{1,4}),");
+            patternBuilder.Append(@"(?<marginV>\d{1,4}),");
+            patternBuilder.Append(@"(?<effect>.*?),");
+            patternBuilder.Append(@"(?<text>.*(?:\r\n?|\r?|\n?))");
+
+            return patternBuilder.ToString();
+        }
 
         private FormatType format;
         private int layer;
@@ -350,7 +374,7 @@ namespace Subeditor.Model.OrganizationalEntities
         /// </summary>
         private void ParseContent()
         {
-            Match eventMatch = Regex.Match(Content, eventPattern);
+            Match eventMatch = eventRegex.Match(Content);
             if (eventMatch.Success)
             {
                 String formatValue = eventMatch.Groups["format"].Value;
@@ -394,27 +418,6 @@ namespace Subeditor.Model.OrganizationalEntities
             }
         }
 
-        /// <summary>
-        /// Tworzy wzór zdarzenia dla wyrażenia regularengo, mającego dopasować bieżący wpis.
-        /// </summary>
-        /// <returns></returns>
-        private static String CreateEventPattern()
-        {
-            StringBuilder patternBuilder = new StringBuilder();
 
-            patternBuilder.Append(@"(?<format>(Dialogue|Comment|Picture|Sound|Movie|Command)):\s");
-            patternBuilder.Append(@"(?<layer>\d),");
-            patternBuilder.Append(@"(?<start>\d{1,2}:\d{2}:\d{2}\.\d{2}),");
-            patternBuilder.Append(@"(?<end>\d{1,2}:\d{2}:\d{2}\.\d{2}),");
-            patternBuilder.Append(@"(?<style>.*),");
-            patternBuilder.Append(@"(?<name>.*),");
-            patternBuilder.Append(@"(?<marginL>\d{4}),");
-            patternBuilder.Append(@"(?<marginR>\d{4}),");
-            patternBuilder.Append(@"(?<marginV>\d{4}),");
-            patternBuilder.Append(@"(?<effect>.*),");
-            patternBuilder.Append(@"(?<text>.*(\r\n|\r|\n)?)");
-
-            return patternBuilder.ToString();
-        }
     }
 }

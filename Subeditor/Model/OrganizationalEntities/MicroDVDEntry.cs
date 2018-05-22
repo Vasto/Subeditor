@@ -11,7 +11,16 @@ namespace Subeditor.Model.OrganizationalEntities
     /// </summary>
     class MicroDVDEntry : TimedEntry
     {
-        private readonly String entryPattern;
+        private static readonly String entryPattern = CreateEntryPattern();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private static String CreateEntryPattern()
+        {
+            return @"{(?<start>\d+)}{(?<end>\d+)}(?<text>.*(?:\r\n?|\r?|\n?))";
+        }
 
         private String text;
 
@@ -23,8 +32,6 @@ namespace Subeditor.Model.OrganizationalEntities
         public MicroDVDEntry(String content, int start)
             : base(content, start)
         {
-            this.entryPattern = CreateEntryPattern();
-
             this.ParseContent();
         }
 
@@ -38,8 +45,6 @@ namespace Subeditor.Model.OrganizationalEntities
         public MicroDVDEntry(String content, int start, long timingStart, long timingEnd) 
             : base(content, start, timingStart, timingEnd)
         {
-            this.entryPattern = CreateEntryPattern();
-
             this.ParseContent();
         }
 
@@ -152,6 +157,7 @@ namespace Subeditor.Model.OrganizationalEntities
         /// </summary>
         private void ParseContent()
         {
+            //Regex entryRegex = new Regex(entryPattern);
             Match entryMatch = Regex.Match(Content, entryPattern);
             if (entryMatch.Success)
             {
@@ -166,9 +172,6 @@ namespace Subeditor.Model.OrganizationalEntities
             }
         }
 
-        private String CreateEntryPattern()
-        {
-            return @"{(?<start>\d+)}{(?<end>\d+)}(?<text>.*(\r\n|\r|\n)?)";
-        }
+
     }
 }

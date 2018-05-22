@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows.Forms;
 using KWinFramework.Views.WinForms;
-using KWinFramework.Views.WinForms.Menus;
-using Subeditor.Model;
+using Subeditor.Services;
 
 namespace Subeditor.Views.Main
 {
@@ -88,35 +82,10 @@ namespace Subeditor.Views.Main
             }
         }
 
-        //private void FormClosingHandler(object sender, FormClosingEventArgs e)
-        //{
-        //    var temporaryEventHolder = PreCloseRequest;
-        //    if (temporaryEventHolder != null)
-        //    {
-        //        var args = new ViewPreCloseEventArgs(e.Cancel);
-        //        temporaryEventHolder(this, args);
-
-        //        e.Cancel = args.CancelViewClose;
-        //    }      
-        //}
-
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            base.OnFormClosing(e);
-
-            var temporaryEventHolder = PreCloseRequest;
-            if (temporaryEventHolder != null)
-            {
-                var args = new ViewPreCloseEventArgs(e.Cancel);
-                temporaryEventHolder(this, args);
-
-                e.Cancel = args.CancelViewClose;
-            }  
-        }
-
         #endregion //IMainFormView
 
         private IntPtr nextClipboardViewer;
+        private IAutoUpdater autoUpdater;
 
         /// <summary>
         /// Konstruktor.
@@ -126,6 +95,12 @@ namespace Subeditor.Views.Main
             InitializeComponent();
 
             this.nextClipboardViewer = (IntPtr)SetClipboardViewer((int)this.Handle);
+
+            Icon updaterIcon = Subeditor.Properties.Resources.AppIcon;
+            this.autoUpdater = new NetSparkleAutoUpdater(Subeditor.Properties.Resources.URLVersionInfo, updaterIcon);
+
+            //this.autoUpdater.Update();
+            this.autoUpdater.UpdateAsync();
         }
 
         /// <summary>
@@ -139,6 +114,12 @@ namespace Subeditor.Views.Main
             this.ViewName = viewName;
 
             this.nextClipboardViewer = (IntPtr)SetClipboardViewer((int)this.Handle);
+
+            Icon updaterIcon = Subeditor.Properties.Resources.AppIcon;
+            this.autoUpdater = new NetSparkleAutoUpdater(Subeditor.Properties.Resources.URLVersionInfo, updaterIcon);
+
+            //this.autoUpdater.Update();
+            this.autoUpdater.UpdateAsync();
         }
 
         /// <summary>
@@ -189,6 +170,24 @@ namespace Subeditor.Views.Main
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+
+            var temporaryEventHolder = PreCloseRequest;
+            if (temporaryEventHolder != null)
+            {
+                var args = new ViewPreCloseEventArgs(e.Cancel);
+                temporaryEventHolder(this, args);
+
+                e.Cancel = args.CancelViewClose;
+            }
+        }
+
+        /// <summary>
         /// Zwalnia używane zasoby.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -197,6 +196,11 @@ namespace Subeditor.Views.Main
             if (disposing && (components != null))
             {
                 components.Dispose();
+            }
+
+            if (disposing && autoUpdater is IDisposable)
+            {
+                ((IDisposable)autoUpdater).Dispose();
             }
 
             ChangeClipboardChain(this.Handle, nextClipboardViewer);

@@ -16,11 +16,20 @@ namespace Subeditor.Model.Tools.Strategies
     {
         private readonly String timedEntryPattern;
 
+        //Przechowuje oryginalną zawartośc tekstową.
+        private String content;
+        //Przechowuje zmodyfikowaną zawartosć tekstową.
+        private StringBuilder modifiedContent;
+        private bool isContentModified;
+        private int modifiedContentLengthDelta;
+
+        private int currentEntryInitialStart;
+        private int currentEntryInitialLength;
+        private int currentEntryNumber;
+        private int nextEntryIndex;
+        private ReadingDirection entryReadingDirection;
         private Regex timedEntryExpressionForward;
         private Regex timedEntryExpressionBackward;
-        private int currentEntryNumber;
-        private int entryStart;
-        private int entryLength;
 
         /// <summary>
         /// Konstruktor.
@@ -29,9 +38,32 @@ namespace Subeditor.Model.Tools.Strategies
         public SSAEditStrategy(String editedContent)
             : base(editedContent)
         {
+            this.nextEntryIndex = 0;
+            this.modifiedContentLengthDelta = 0;
+            this.entryReadingDirection = ReadingDirection.None;
             this.timedEntryPattern = CreateTimedEntryPattern();
             this.timedEntryExpressionForward = new Regex(timedEntryPattern, RegexOptions.Compiled);
             this.timedEntryExpressionBackward = new Regex(timedEntryPattern, RegexOptions.Compiled | RegexOptions.RightToLeft);
+        }
+
+        /// <summary>
+        /// Pozwala pobrać lub ustawić przechowywaną i edytowaną zawartość tekstową.
+        /// </summary>
+        public override String Content
+        {
+            get
+            {
+                UpdateContent();
+                return content;
+            }
+            set
+            {
+                content = value;
+                modifiedContent = new StringBuilder(value);
+                nextEntryIndex = 0;
+                modifiedContentLengthDelta = 0;
+                entryReadingDirection = ReadingDirection.None;
+            }
         }
 
         /// <summary>
@@ -44,14 +76,17 @@ namespace Subeditor.Model.Tools.Strategies
                 return;
             }
 
-            StringBuilder contentBuilder = new StringBuilder(Content);
-            contentBuilder.Remove(entryStart, entryLength);
-            contentBuilder.Insert(entryStart, CurrentEntry.Content);
+            int entryStartInModifiedContent = currentEntryInitialStart + modifiedContentLengthDelta;
+            modifiedContent.Remove(entryStartInModifiedContent, currentEntryInitialLength);
+            //Zastanowić się czy insert nie powinno wstawić w pozycję określoną przez Entry...
+            modifiedContent.Insert(entryStartInModifiedContent, CurrentEntry.Content);
 
-            entryStart = CurrentEntry.Start;
-            entryLength = CurrentEntry.Length;
+            //Oblicza zmiane długości wpisu po modyfikacji i dodaje ją do całkowitej zmiany długości zmodyfikowanego tekstu
+            //w stosunku do oryginału.
+            int entryLengthDelta = CurrentEntry.Length - currentEntryInitialLength;
+            modifiedContentLengthDelta += entryLengthDelta;
 
-            Content = contentBuilder.ToString();
+            isContentModified = true;
         }
 
         /// <summary>
@@ -60,18 +95,27 @@ namespace Subeditor.Model.Tools.Strategies
         /// <returns>Zwraca kolejną wpis, a jeśli nie ma już więcej wpisów to null.</returns>
         public override TimedEntry NextTimedEntry()
         {
+            if (entryReadingDirection == ReadingDirection.Backward)
+            {
+                UpdateContent();
+            }
+            entryReadingDirection = ReadingDirection.Forward;
+
             SSAEventEntry nextEntry = null;
-            int startIndex = CurrentEntry != null ? CurrentEntry.Start + CurrentEntry.Length : 0;
-            Match entryMatch = timedEntryExpressionForward.Match(Content, startIndex);
+            Match entryMatch = timedEntryExpressionForward.Match(content, nextEntryIndex);
             if (entryMatch.Success)
             {
-                nextEntry = new SSAEventEntry(entryMatch.Value, entryMatch.Index);
-                entryStart = entryMatch.Index;
-                entryLength = entryMatch.Value.Length;
+                nextEntry = new SSAEventEntry(entryMatch.Value, entryMatch.Index + modifiedContentLengthDelta);
+                currentEntryInitialStart = entryMatch.Index;
+                currentEntryInitialLength = entryMatch.Value.Length;
                 currentEntryNumber++;
             }
 
             CurrentEntry = nextEntry;
+            if (CurrentEntry != null)
+            {
+                nextEntryIndex = currentEntryInitialStart + currentEntryInitialLength;
+            }
 
             return nextEntry;
         }
@@ -82,18 +126,27 @@ namespace Subeditor.Model.Tools.Strategies
         /// <returns>Zwraca poprzedni wpis, a jeśli nie ma już więcej wpisów to null.</returns>
         public override TimedEntry PreviousTimedEntry()
         {
+            if (entryReadingDirection == ReadingDirection.Forward)
+            {
+                UpdateContent();
+            }
+            entryReadingDirection = ReadingDirection.Backward;
+
             SSAEventEntry previousEntry = null;
-            int startIndex = (CurrentEntry != null) ? CurrentEntry.Start : 0;
-            Match entryMatch = timedEntryExpressionBackward.Match(Content, startIndex);
+            Match entryMatch = timedEntryExpressionBackward.Match(content, nextEntryIndex);
             if (entryMatch.Success)
             {
-                previousEntry = new SSAEventEntry(entryMatch.Value, entryMatch.Index);
-                entryStart = entryMatch.Index;
-                entryLength = entryMatch.Value.Length;
+                previousEntry = new SSAEventEntry(entryMatch.Value, entryMatch.Index + modifiedContentLengthDelta);
+                currentEntryInitialStart = entryMatch.Index;
+                currentEntryInitialLength = entryMatch.Value.Length;
                 currentEntryNumber--;
             }
 
             CurrentEntry = previousEntry;
+            if (CurrentEntry != null)
+            {
+                nextEntryIndex = currentEntryInitialStart;
+            }
 
             return previousEntry;
         }
@@ -103,23 +156,23 @@ namespace Subeditor.Model.Tools.Strategies
         /// </summary>
         private string CreateTimedEntryPattern()
         {
-            //StringBuilder patternBuilder = new StringBuilder();
+            return @"(?:Dialogue|Comment|Picture|Sound|Movie|Command):\sMarked=\d+,.*(?:\r\n?|\r?|\n?)";
+        }
 
-            //patternBuilder.Append(@"(Dialogue|Comment|Picture|Sound|Movie|Command):\sMarked=");
-            //patternBuilder.Append(@"\d,");
-            //patternBuilder.Append(@"\d{1,2}:\d{2}:\d{2}\.\d{2},");
-            //patternBuilder.Append(@"\d{1,2}:\d{2}:\d{2}\.\d{2},");
-            //patternBuilder.Append(@".*,");
-            //patternBuilder.Append(@".*,");
-            //patternBuilder.Append(@"\d{4},");
-            //patternBuilder.Append(@"\d{4},");
-            //patternBuilder.Append(@"\d{4},");
-            //patternBuilder.Append(@".*,");
-            //patternBuilder.Append(@".*(\r\n|\r|\n)?");
+        /// <summary>
+        /// Dokonuje przeniesienia zawartości zmodyfikowanej (modifiedContent) do zmiennej przechowującej zawartość (content).
+        /// Przypisuje zmiennym pomocniczym zawartości zmodyfikowanej, odpowiednie wartości. 
+        /// </summary>
+        private void UpdateContent()
+        {
+            if (isContentModified)
+            {
+                content = modifiedContent.ToString();
+                nextEntryIndex += modifiedContentLengthDelta;
+                modifiedContentLengthDelta = 0;
 
-            //return patternBuilder.ToString();
-
-            return @"(Dialogue|Comment|Picture|Sound|Movie|Command):\sMarked=\d,.*(\r\n|\r|\n)?";
+                isContentModified = false;
+            }
         }
 
     }

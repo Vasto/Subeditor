@@ -1,0 +1,11 @@
+------Subeditor Changelog------
+
+------v. 0.8.61------
+
+- Performance optimizations.
+- Fixed Some parsing issues of the ASS and SSA formats.
+- Selection after Timing Adjustment now has a correct length.
+
+------v. 0.8.62------
+
+- Fixed some crashes caused by missing icons.

@@ -25,8 +25,9 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>0.8.5.%2a</ApplicationVersion>
+    <ProductName>Subeditor</ProductName>
+    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationVersion>0.8.7.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -51,10 +52,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>D3568B8BC6D54B346684A8C7E2FBA0C846071C44</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>95783385B3DFDDD6309EC790649656EECE2C69F1</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>Subeditor_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>KKKSoft.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -63,12 +64,23 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Assets\AppIcon.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup>
+    <Win32Resource>E:\Programming\C#\Projects\Subeditor\NativeResources.rct</Win32Resource>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AppLimit.NetSparkle.Net40">
+      <HintPath>..\packages\NetSparkle.1.0.83\lib\net40\AppLimit.NetSparkle.Net40.dll</HintPath>
+    </Reference>
     <Reference Include="DiffMatchPatch, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\DiffMatchPatch.dll</HintPath>
@@ -134,6 +146,7 @@
     <Compile Include="Model\Tools\EditToolBase.cs" />
     <Compile Include="Model\Tools\Strategies\AssEditStrategy.cs" />
     <Compile Include="Model\Tools\Strategies\EditStrategyBase.cs" />
+    <Compile Include="Model\Tools\Strategies\ReadingDirection.cs" />
     <Compile Include="Model\Tools\Strategies\StrategyForFormatRepository.cs" />
     <Compile Include="Model\Tools\Strategies\EmptyEditStrategy.cs" />
     <Compile Include="Model\Tools\Strategies\IEditStrategy.cs" />
@@ -146,6 +159,8 @@
     <Compile Include="Model\Tools\SynchronizationPoint.cs" />
     <Compile Include="Model\Tools\SynchronizationTool.cs" />
     <Compile Include="Model\Tools\TimingAdjustmentTool.cs" />
+    <Compile Include="Services\IAutoUpdater.cs" />
+    <Compile Include="Services\NetSparkleAutoUpdater.cs" />
     <Compile Include="Utilities\IEnumerableExtensions.cs" />
     <Compile Include="Utilities\RollingStack.cs" />
     <Compile Include="Utilities\TextRange.cs" />
@@ -289,6 +304,8 @@
       <DependentUpon>TimingAdjustmentToolView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="KKKSoft.pfx" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -298,7 +315,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Subeditor_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

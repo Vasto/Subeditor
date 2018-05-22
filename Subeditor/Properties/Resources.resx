@@ -168,4 +168,14 @@
   <data name="PathErrorImage" xml:space="preserve">
     <value>Assets\error.png</value>
   </data>
+  <data name="PathAppIcon" xml:space="preserve">
+    <value>Assets\AppIcon.ico</value>
+  </data>
+  <data name="URLVersionInfo" xml:space="preserve">
+    <value>http://sourceforge.net/projects/app-subeditor/files/bin/versioninfo.xml/download</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="AppIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\AppIcon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

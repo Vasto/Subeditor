@@ -1,9 +1,16 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subeditor", "Subeditor\Subeditor.csproj", "{97019C5E-6065-46EB-BCF3-8AC773C33216}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9CF0AA01-521B-461F-BE35-71D598B2F7DC}"
+	ProjectSection(SolutionItems) = preProject
+		NativeResources.rct = NativeResources.rct
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubeditorRegexCompiler", "SubeditorRegexCompiler\SubeditorRegexCompiler.csproj", "{7B4ABF74-60FC-49B5-A99F-DCBBA0814008}"
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "SubeditorSetup", "SubeditorSetup\SubeditorSetup.wixproj", "{6A78C3DC-35E4-4091-9601-5D2A46D99310}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -28,8 +35,31 @@ Global
 		{97019C5E-6065-46EB-BCF3-8AC773C33216}.Release|Mixed Platforms.Build.0 = Release|x86
 		{97019C5E-6065-46EB-BCF3-8AC773C33216}.Release|x86.ActiveCfg = Release|x86
 		{97019C5E-6065-46EB-BCF3-8AC773C33216}.Release|x86.Build.0 = Release|x86
+		{7B4ABF74-60FC-49B5-A99F-DCBBA0814008}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{7B4ABF74-60FC-49B5-A99F-DCBBA0814008}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{7B4ABF74-60FC-49B5-A99F-DCBBA0814008}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{7B4ABF74-60FC-49B5-A99F-DCBBA0814008}.Debug|x86.ActiveCfg = Debug|x86
+		{7B4ABF74-60FC-49B5-A99F-DCBBA0814008}.Debug|x86.Build.0 = Debug|x86
+		{7B4ABF74-60FC-49B5-A99F-DCBBA0814008}.Release|Any CPU.ActiveCfg = Release|x86
+		{7B4ABF74-60FC-49B5-A99F-DCBBA0814008}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{7B4ABF74-60FC-49B5-A99F-DCBBA0814008}.Release|Mixed Platforms.Build.0 = Release|x86
+		{7B4ABF74-60FC-49B5-A99F-DCBBA0814008}.Release|x86.ActiveCfg = Release|x86
+		{7B4ABF74-60FC-49B5-A99F-DCBBA0814008}.Release|x86.Build.0 = Release|x86
+		{6A78C3DC-35E4-4091-9601-5D2A46D99310}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{6A78C3DC-35E4-4091-9601-5D2A46D99310}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{6A78C3DC-35E4-4091-9601-5D2A46D99310}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{6A78C3DC-35E4-4091-9601-5D2A46D99310}.Debug|x86.ActiveCfg = Debug|x86
+		{6A78C3DC-35E4-4091-9601-5D2A46D99310}.Debug|x86.Build.0 = Debug|x86
+		{6A78C3DC-35E4-4091-9601-5D2A46D99310}.Release|Any CPU.ActiveCfg = Release|x86
+		{6A78C3DC-35E4-4091-9601-5D2A46D99310}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{6A78C3DC-35E4-4091-9601-5D2A46D99310}.Release|Mixed Platforms.Build.0 = Release|x86
+		{6A78C3DC-35E4-4091-9601-5D2A46D99310}.Release|x86.ActiveCfg = Release|x86
+		{6A78C3DC-35E4-4091-9601-5D2A46D99310}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6A78C3DC-35E4-4091-9601-5D2A46D99310} = {9CF0AA01-521B-461F-BE35-71D598B2F7DC}
 	EndGlobalSection
 EndGlobal

@@ -84,7 +84,7 @@ namespace Subeditor.Model.OrganizationalEntities
         /// <summary>
         /// Porównuje czy jeden obiekt Entry jest równy drugiemu
         /// </summary>
-        /// <param name="other">Obiekt Selection do porównania.</param>
+        /// <param name="other">Obiekt Entry do porównania.</param>
         /// <returns>Równy czy nie.</returns>
         public virtual bool Equals(Entry other)
         {

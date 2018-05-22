@@ -116,12 +116,17 @@ namespace Subeditor.Model.Tools
         {
             IEditStrategy editStrategy = this.CreateStrategyForCurrentFormat();
 
+            //Wartość korekcji długości zaznaczenia, mająca zachować początkowy obszat zaznaczenia pomimow ewentualnych zmian długości tekstu
+            //wynikłych ze zmiany wartości timingów.
+            int selectionLengthAdjustment = 0;
+
             TimedEntry entry = null;
             while ((entry = editStrategy.NextTimedEntry()) != null)
             {
                 int entryStart = entry.Start;
                 int entryEnd = entry.Start + entry.Length;
-                int selectionEnd = selectionStart + selectionLength;
+                int entryInitialLength = entry.Length;
+                int selectionEnd = selectionStart + selectionLength + selectionLengthAdjustment;
                 
                 //Zaznaczenie nie obejmuje znaku nowej lini dla ostatniego wpisu, więc w sytuacji kiedy sięga ono końca wpisu
                 //istnieje konieczność zwiększenia jego długości o znak nowej lini, tak aby jego indeks końca nie mniejszy
@@ -132,7 +137,6 @@ namespace Subeditor.Model.Tools
                 {
                     selectionEnd += 2;
                 }
-
 
                 //Wpis znajduje się przed zaznaczeniem;
                 if (entryEnd < selectionStart)
@@ -149,6 +153,8 @@ namespace Subeditor.Model.Tools
                     }
 
                     editStrategy.SaveCurrentEntry();
+
+                    selectionLengthAdjustment += entry.Length - entryInitialLength;
                 }
                 //Wpis przecina się z zaznaczeniem.
                 else if (((entryStart < selectionStart) && (entryEnd <= selectionEnd)) ||
@@ -166,6 +172,8 @@ namespace Subeditor.Model.Tools
                     }
                     
                     editStrategy.SaveCurrentEntry();
+
+                    selectionLengthAdjustment += entry.Length - entryInitialLength;
 
                 }
                 //Wpis znajduje się za zaznaczeniem
@@ -256,12 +264,17 @@ namespace Subeditor.Model.Tools
         {
             IEditStrategy editStrategy = this.CreateStrategyForCurrentFormat();
 
+            //Wartość korekcji długości zaznaczenia, mająca zachować początkowy obszat zaznaczenia pomimow ewentualnych zmian długości tekstu
+            //wynikłych ze zmiany wartości timingów.
+            int selectionLengthAdjustment = 0;
+
             TimedEntry entry = null;
             while ((entry = editStrategy.NextTimedEntry()) != null)
             {
                 int entryStart = entry.Start;
                 int entryEnd = entry.Start + entry.Length;
-                int selectionEnd = selectionStart + selectionLength;
+                int entryInitialLength = entry.Length;
+                int selectionEnd = selectionStart + selectionLength + selectionLengthAdjustment;
 
                 //Zaznaczenie nie obejmuje znaku nowej lini dla ostatniego wpisu, więc w sytuacji kiedy sięga ono końca wpisu
                 //istnieje konieczność zwiększenia jego długości o znak nowej lini, tak aby jego indeks końca nie mniejszy
@@ -289,6 +302,8 @@ namespace Subeditor.Model.Tools
                     }
 
                     editStrategy.SaveCurrentEntry();
+
+                    selectionLengthAdjustment += entry.Length - entryInitialLength;
                 }
                 //Wpis przecina się z zaznaczeniem.
                 else if (((entryStart < selectionStart) && (entryEnd <= selectionEnd)) ||
@@ -306,6 +321,8 @@ namespace Subeditor.Model.Tools
                     }
 
                     editStrategy.SaveCurrentEntry();
+
+                    selectionLengthAdjustment += entry.Length - entryInitialLength;
 
                 }
                 //Wpis znajduje się za zaznaczeniem
@@ -357,12 +374,33 @@ namespace Subeditor.Model.Tools
         private void SetEditorContent(String content)
         {
             SubtitlesContentModificationArea modificationArea = 
-                (Editor.EditState.Selection.Length > 0) ? SubtitlesContentModificationArea.Selection : SubtitlesContentModificationArea.Entire;
+                (this.Editor.EditState.Selection.Length > 0) ? 
+                SubtitlesContentModificationArea.Selection : 
+                SubtitlesContentModificationArea.Entire;
+
+            SubtitlesEditState newEditState = null;
+            if (modificationArea == SubtitlesContentModificationArea.Selection)
+            {
+                //Utworzenie nowego stanu edycjiu uwzględniającego zmiane długości tekstu w wyniku zmiany timingów i dostosowanie długości początkowego
+                //zaznaczenia do nowej długości tekstu, tak odpowiadało ono dalej pierwotnie zaznaczonej treści.
+                int initialContentLength = this.Editor.SubtitlesContent.Length;
+                int modifiedContentLength = content.Length;
+                int contentLengthDelta = modifiedContentLength - initialContentLength;
+                Selection adjustedSelection = new Selection(
+                    this.Editor.EditState.Selection.Start,
+                    this.Editor.EditState.Selection.Length + contentLengthDelta);
+                newEditState = new SubtitlesEditState(this.Editor.EditState.CaretPosition, adjustedSelection);
+            }
+            else
+            {
+                //Nie ma zaznaczenia, więc można wykorzystać niezmodyfikowany stan edycji.
+                newEditState = this.Editor.EditState;
+            }
 
             //Najpierw modyfikacja nowej zawrtości, a później stanu edycji 
             //aby po zmodyfikowaniu zawrtości stan edycji był taki sam jak przed.
             SubtitlesContentModification contentModification = new SubtitlesContentModification(content, modificationArea);
-            SubtitlesEditStateModification editStateModification = new SubtitlesEditStateModification(Editor.EditState);
+            SubtitlesEditStateModification editStateModification = new SubtitlesEditStateModification(newEditState);
 
             ModificationComposer composer = new ModificationComposer();
             composer.Begin();

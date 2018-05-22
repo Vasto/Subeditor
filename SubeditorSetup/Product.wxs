@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?define Version = "0.8.74" ?>
+<?define UpgradeCode = "AAB94450-6FDA-448F-8B28-AA151C5F9F2B" ?> <!--Tego nie wolno zapomnieć, bo bez tego nie da rady zrobić upgrade-->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension"
+     xmlns:ui="http://schemas.microsoft.com/wix/UIExtension"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <Product Id="*" Name="Subeditor" Language="1033" Version="$(var.Version)" Manufacturer="KKKSoft" UpgradeCode="$(var.UpgradeCode)">
+    <Package InstallerVersion="200" Compressed="yes" />
+    <Media Id="1" Cabinet="simple.cab" EmbedCab="yes" />
+    <Property Id="DISABLEADVTSHORTCUTS" Value="1" />
+    <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
+    <Upgrade Id="$(var.UpgradeCode)">
+      <UpgradeVersion
+         Minimum="0.0.0" Maximum="99.9.9"
+         Property="PREVIOUSVERSIONSINSTALLED"
+         IncludeMinimum="yes" IncludeMaximum="no" />
+    </Upgrade>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder" Name="PFiles">
+        <Directory Id="SUBEDITORPRODUCTDIR" Name="Subeditor">
+        <Directory Name="Assets" Id="ASSETS">
+          <Component Id="Assets" DiskId="1" KeyPath="yes" Guid="1d5f6ba9-4c89-46fe-b696-cbc27ffa94f9">
+            <File Id="ALERT.PNG" Name="alert.png" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\Assets\alert.png" />
+            <File Id="APPICON__1_.ICO" Name="AppIcon (1).ico" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\Assets\AppIcon (1).ico" />
+            <File Id="APPICON__2_.ICO" Name="AppIcon (2).ico" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\Assets\AppIcon (2).ico" />
+            <File Id="APPICON__3_.ICO" Name="AppIcon (3).ico" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\Assets\AppIcon (3).ico" />
+            <File Id="APPICON.ICO" Name="AppIcon.ico" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\Assets\AppIcon.ico" />
+            <File Id="COPYICON.ICO" Name="CopyIcon.ico" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\Assets\CopyIcon.ico" />
+            <File Id="CUTICON.ICO" Name="CutIcon.ico" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\Assets\CutIcon.ico" />
+            <File Id="ERROR.PNG" Name="error.png" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\Assets\error.png" />
+            <File Id="OPENICON.ICO" Name="OpenIcon.ico" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\Assets\OpenIcon.ico" />
+            <File Id="PASTEICON.ICO" Name="PasteIcon.ico" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\Assets\PasteIcon.ico" />
+            <File Id="REDOICON.ICO" Name="RedoIcon.ico" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\Assets\RedoIcon.ico" />
+            <File Id="SAVEASFILEICON.ICO" Name="SaveAsFileIcon.ico" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\Assets\SaveAsFileIcon.ico" />
+            <File Id="SAVFILEICON.ICO" Name="SavFileIcon.ico" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\Assets\SavFileIcon.ico" />
+            <File Id="UNDOICON.ICO" Name="UndoIcon.ico" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\Assets\UndoIcon.ico" />
+          </Component>
+        </Directory>
+        <Component Id="Main" KeyPath="yes" DiskId="1" Guid="d86835d7-6640-4872-a33a-4e11a4287f46">
+          <File Id="SUBEDITOR.EXE" Name="Subeditor.exe" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\bin\Release\Subeditor.exe"/>
+          <File Id="APPLIMIT.NETSPARKLE.NET40.DLL" Name="AppLimit.NetSparkle.Net40.dll" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\bin\Release\AppLimit.NetSparkle.Net40.dll" />
+          <File Id="DIFFMATCHPATCH.DLL" Name="DiffMatchPatch.dll" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\bin\Release\DiffMatchPatch.dll" />
+          <File Id="KWINFRAMEWORK.DLL" Name="KWinFramework.dll" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\bin\Release\KWinFramework.dll" />
+          <File Id="MATHNET.NUMERICS.DLL" Name="MathNet.Numerics.dll" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\bin\Release\MathNet.Numerics.dll" />
+          <File Id="SCILEXER.DLL" Name="SciLexer.dll" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\bin\Release\SciLexer.dll" />
+          <File Id="SCILEXER64.DLL" Name="SciLexer64.dll" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\bin\Release\SciLexer64.dll" />
+          <File Id="SCINTILLANET.DLL" Name="ScintillaNET.dll" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\bin\Release\ScintillaNET.dll" />
+          <File Id="SUBEDITOR.EXE.CONFIG" Name="Subeditor.exe.config" Source="E:\Programming\C#\Projects\Subeditor\Subeditor\bin\Release\Subeditor.exe.config" />
+          <File Id="ZLIB.NET.DLL" Name="zlib.net.dll" Source="E:\Programming\C#\Resources\libraries\zlib.net.dll" />
+        </Component>
+        <Directory Id="DesktopFolder" />
+        <Directory Id="ProgramMenuFolder">
+          <Directory Id="ProgramMenuDir" Name="Subeditor">
+            <Component Id="StartMenuShortcuts" Guid="DD223FD0-B86B-43CF-B9DC-8E20EE93A75A">
+              <RemoveFolder Id="ProgramMenuDir" On="uninstall" />
+              <RegistryValue Root="HKCU" Key="Software\[Manufacturer]\[ProductName]" Type="string" Value="" />
+              <Shortcut Id="UninstallProduct" Name="Uninstall" Description="Uninstalls the application" Target="[System64Folder]msiexec.exe" Arguments="/x [ProductCode]" />
+              <Shortcut Id="ExeShortcut" Name="Subeditor" Target="[SUBEDITORPRODUCTDIR]Subeditor.exe" Icon="StartMenuIcon.exe" IconIndex="0" />
+            </Component>
+          </Directory>
+        </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+    <Feature Id="DefaultFeature" Title="Main Feature" Level="1">
+      <ComponentRef Id="Assets" />
+      <ComponentRef Id="Main" />
+      <ComponentRef Id="StartMenuShortcuts" />
+    </Feature>
+    <UI />
+
+    <UIRef Id="WixUI_InstallDir" />
+    <UIRef Id="WixUI_ErrorProgressText" />
+    <Property Id="WIXUI_INSTALLDIR" Value="SUBEDITORPRODUCTDIR" />
+
+    <PropertyRef Id="NETFRAMEWORK40FULL"/>
+    <Condition Message="This application requires .NET Framework 4.0. Please install the .NET Framework then run this installer again.">
+      <![CDATA[Installed OR NETFRAMEWORK40FULL]]>
+    </Condition> 
+    
+    <!--<CustomAction Id="UninstallOldAction" Directory="TARGETDIR" ExeCommand="[SystemFolder]MsiExec.exe /X {83026498-8B5C-4F53-9C25-BB6FD31C39FA} /qn" Return="ignore" />
+    <InstallExecuteSequence>
+      <Custom Action="UninstallOldAction" Before="InstallInitialize"></Custom>
+    </InstallExecuteSequence>-->
+  
+    <!--<Property Id="QtExecCmdLine" Value="&quot;[SystemFolder]/MsiExec.exe&quot; /X {83026498-8B5C-4F53-9C25-BB6FD31C39FA} /qf"/>
+    <CustomAction Id="QtExecExample" BinaryKey="WixCA" DllEntry="CAQuietExec" Execute="immediate" Return="ignore"/>-->
+
+    <!--<Upgrade Id="$(var.UpgradeCode)">
+      <UpgradeVersion Minimum="$(var.Version)" IncludeMinimum="no" OnlyDetect="yes" Property="NEWERVERSIONDETECTED" />
+      <UpgradeVersion Minimum="0.0.0" Maximum="$(var.Version)" IncludeMinimum="yes" IncludeMaximum="yes" Property="OLDERVERSIONBEINGUPGRADED" />
+    </Upgrade>-->
+    <InstallExecuteSequence>
+      <RemoveExistingProducts After="InstallValidate" /> <!--To chyba może przyjąć inna wartość np InstallInitialize-->
+      <!--<InstallExecute After="RemoveExistingProducts" />-->
+      <!--<Custom Action="QtExecExample" Before="InstallInitialize"/>-->
+    </InstallExecuteSequence>
+    <!--<InstallUISequence>
+      <Custom Action="QtExecExample" After="CostFinalize"/>
+    </InstallUISequence>-->
+
+    <!--Ikona na liście dodaj/usuń programy-->
+    <Property Id="ARPPRODUCTICON" Value="StartMenuIcon.exe" />
+    
+    <!--<Icon Id="DesktopIcon.exe" SourceFile="E:\Programming\C#\Projects\Subeditor\Subeditor\bin\Release\Subeditor.exe" />-->
+    <Icon Id="StartMenuIcon.exe" SourceFile="E:\Programming\C#\Projects\Subeditor\Subeditor\bin\Release\Subeditor.exe" />
+  </Product>
+</Wix>
